@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+  Pesquisa
+{% endblock %}
+
+{% block content %}
+      <main class='bg-black min-h-screen w-full'>
+        <section class='bg-black min-h-screen flex py-10'>
+          <div class="p-8 w-auto relative">
+            <h2 class="text-gray-200 text-2xl font-medium">
+                Resultados da Busca
+            </h2>
+            <div class="flex flex-auto flex-wrap items-center min-w-full movie_lis">
+              {% for filme in object_list %}
+                <div class="my-4 mx-auto overflow-hidden hover:scale-125 flex-shrink-0 rounded-sm cursor-pointer h-64 w-96">
+                  <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                    <img src="{{ filme.thumb.url }}" class="object-cover w-full h-full " alt="">
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+    </main>
+{% endblock %}
+
+

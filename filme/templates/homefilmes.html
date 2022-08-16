@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+  Hashflix - Home
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/homefilmes.css' %}">
+{% endblock %}
+
+{% block content %}
+
+  <main class="bg-primary_black min-h-screen w-full">
+    <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex items-end bg-cover" style="background-image: url('{{ filme_destaque.thumb.url }}');">
+      <div>
+        <h2 class="text-6xl font-semibold text-white my-4">
+          {{ filme_destaque.titulo }}
+        </h2>
+        <p class=" w-11/12 md:w-5/12 font-medium text-white my-4">
+          {{ filme_destaque.descricao|slice:"150" }}...
+        </p>
+        <div class="flex my-4">
+          <a href="{% url 'filme:detalhesfilme' filme_destaque.pk %}">
+            <button class="flex items-center bg-white py-2 px-5 rounded-md" style='color:black;'>
+              <ion-icon name="play" class="text-2xl"></ion-icon>
+              <span class="ml-3 font-medium " >
+                Play
+              </span>
+            </button>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-primary_black flex justify-center py-10">
+      <div class="p-8 w-10/12 relative" >
+        <h2 class="text-gray-200 text-2xl font-medium">
+            Novo
+        </h2>
+      <div class="wrapper">
+          <section id="novidades1" class="flex flex-nowrap items-center justify-center">
+          <a href="#novidades2" class="arrow__btn left-arrow text-6xl page">‹</a>
+          {% for filme in lista_filmes_recentes %}
+          {% if forloop.counter < 4 %}
+            <div class="item h-64 w-full m-4">
+              <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+              </a>
+            </div>
+          {% endif %}
+          {% endfor %}
+          <a href="#novidades2" class="arrow__btn right-arrow text-6xl">›</a>
+        </section>
+        {% if lista_filmes_recentes|length > 3 %}
+        <section id="novidades2" class="flex flex-nowrap items-center justify-center">
+          <a href="#novidades1" class="arrow__btn left-arrow text-6xl">‹</a>
+            {% for filme in lista_filmes_recentes %}
+            {% if forloop.counter > 3 %}
+              <div class="item h-64 w-full m-4">
+                <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                  <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                </a>
+              </div>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+          <a href="#novidades1" class="arrow__btn right-arrow text-6xl">›</a>
+        </section>
+      </div>
+      </div>
+    </section>
+    
+    <section class='bg-primary_black flex justify-center py-10'>
+      <div class="p-8 w-10/12 relative" >
+        <h2 class="text-gray-200 text-2xl font-medium">
+          Populares
+        </h2>
+      <div class="wrapper">
+        <section id="populares1" class="flex flex-nowrap items-center justify-center">
+          <a href="#populares2" class="arrow__btn left-arrow text-6xl page">‹</a>
+          {% for filme in lista_filmes_populares %}
+          {% if forloop.counter < 4 %}
+            <div class="item h-64 w-full m-4">
+              <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+              </a>
+            </div>
+          {% endif %}
+          {% endfor %}
+          <a href="#populares2" class="arrow__btn right-arrow text-6xl">›</a>
+        </section>
+        {% if lista_filmes_populares|length > 3 %}
+        <section id="populares2" class="flex flex-nowrap items-center justify-center">
+          <a href="#populares1" class="arrow__btn left-arrow text-6xl">‹</a>
+            {% for filme in lista_filmes_populares %}
+            {% if forloop.counter > 3 %}
+              <div class="item h-64 w-full m-4">
+                <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                  <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                </a>
+              </div>
+            {% endif %}
+            {% endfor %}
+          <a href="#populares1" class="arrow__btn right-arrow text-6xl">›</a>
+        </section>
+        {% endif %}
+      </div>
+      </div>
+    </section>
+
+    
+    <section class='bg-primary_black flex justify-center py-10'>
+      <div class="p-8 w-10/12 relative" >
+        <h2 class="text-gray-200 text-2xl font-medium">
+          Assistir Novamente
+        </h2>
+      <div class="wrapper">
+        <section id="assistidos1" class="flex flex-nowrap items-center justify-center">
+          {% if request.user.filmes_assistidos.all|length > 3 %}
+          <a href="#assistidos2" class="arrow__btn left-arrow text-6xl page">‹</a>
+          {% endif %}
+          {% for filme in request.user.filmes_assistidos.all %}
+          {% if forloop.counter < 4 %}
+            <div class="item h-64 w-full m-4">
+              <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+              </a>
+            </div>
+          {% endif %}
+          {% endfor %}
+          {% if request.user.filmes_assistidos.all|length > 3 %}
+          <a href="#assistidos2" class="arrow__btn right-arrow text-6xl">›</a>
+          {% endif %}
+        </section>
+        {% if request.user.filmes_assistidos|length > 3 %}
+        <section id="assistidos2" class="flex flex-nowrap items-center justify-center">
+          <a href="#assistidos1" class="arrow__btn left-arrow text-6xl">‹</a>
+            {% for filme in request.user.filmes_assistidos %}
+            {% if forloop.counter > 3 %}
+              <div class="item h-64 w-full m-4">
+                <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                  <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                </a>
+              </div>
+            {% endif %}
+            {% endfor %}
+          <a href="#assistidos1" class="arrow__btn right-arrow text-6xl">›</a>
+        </section>
+        {% endif %}
+      </div>
+      </div>
+    </section>
+  </main>
+{% endblock %}

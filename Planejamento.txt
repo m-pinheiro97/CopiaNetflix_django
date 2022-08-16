@@ -1,0 +1,19 @@
+- Homepage
+- Login e Cadastrar Conta (usuario  e autenticação)
+    - email
+    - username
+    - senha
+    - filmes ja vistos
+    - Editar perfil
+
+- filmes/series
+    - episódios
+        - videos
+    - thumb
+    - titulo
+    - descrição
+    - categoria
+    - qtde de views
+    - data de criação
+
+-Barra de pesquisa
